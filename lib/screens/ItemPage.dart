@@ -23,31 +23,33 @@ class _ItemPageState extends State<ItemPage> {
       );
     }
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        LayoutBuilder(
-          builder: (context, constraint) {
-            return SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    height: 600,
-                    child: ListView(
-                      children: _itemList,
-                      scrollDirection: Axis.vertical,
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          LayoutBuilder(
+            builder: (context, constraint) {
+              return SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      height: 600,
+                      child: ListView(
+                        children: _itemList,
+                        scrollDirection: Axis.vertical,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            );
-          },
-        ),
-        RaisedButton(
-          onPressed: _addNewItemCard,
-          child: Text('Add'),
-        ),
-      ],
+                  ],
+                ),
+              );
+            },
+          ),
+          RaisedButton(
+            onPressed: _addNewItemCard,
+            child: Text('Add'),
+          ),
+        ],
+      ),
     );
   }
 }

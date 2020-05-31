@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:path/path.dart';
 import 'dart:io';
 
@@ -32,14 +33,45 @@ class _ItemCardState extends State<ItemCard> {
     StorageTaskSnapshot taskSnapshot = await uploadImage.onComplete;
     print(taskSnapshot);
 
-    setState(() {
-      print('Image Uploaded');
-      Scaffold.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Image Uploaded'),
-        ),
-      );
-    });
+    setState(
+      () {
+        print('Image Uploaded');
+        Scaffold.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Image Uploaded'),
+          ),
+        );
+      },
+    );
+  }
+
+  // Storing data
+  String itemName, itemColor;
+
+  void getItemName(String name) {
+    this.itemName = name;
+  }
+
+  void getItemColor(String itemColor) {
+    this.itemColor = itemColor;
+  }
+
+  createData() {
+    print('Data Created');
+    DocumentReference itemNameReference =
+        Firestore.instance.collection('ItemData').document(itemName);
+
+    // Creating Map
+    Map<String, dynamic> items = {
+      "itemName": itemName,
+      "itemColor": itemColor,
+    };
+
+    itemNameReference.setData(items).whenComplete(
+          () => {
+            print('$itemName created'),
+          },
+        );
   }
 
   @override
@@ -50,6 +82,7 @@ class _ItemCardState extends State<ItemCard> {
         child: Column(
           children: <Widget>[
             Container(
+              margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
               height: 200,
               width: MediaQuery.of(context).size.width,
               child: (_image != null)
@@ -60,10 +93,23 @@ class _ItemCardState extends State<ItemCard> {
                   : Image.network(
                       'https://images.unsplash.com/photo-1581068466660-e6585b8afa97?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80',
                       height: 100,
-                      width: 100),
+                      width: 100,
+                    ),
             ),
-            TextField(
-              decoration: InputDecoration(hintText: 'Enter Item'),
+            TextFormField(
+              decoration: InputDecoration(
+                labelText: 'Item Name',
+                fillColor: Colors.white,
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Colors.blue,
+                    width: 2.0,
+                  ),
+                ),
+              ),
+              onChanged: (String name) {
+                getItemName(name);
+              },
             ),
             Container(
               margin: EdgeInsets.all(10),
@@ -75,15 +121,16 @@ class _ItemCardState extends State<ItemCard> {
                     icon: Icon(Icons.arrow_drop_down),
                     iconSize: 24,
                     elevation: 16,
-                    style: TextStyle(color: Colors.deepPurple),
+                    style: TextStyle(color: Colors.black),
                     underline: Container(
                       height: 2,
-                      color: Colors.deepPurpleAccent,
+                      color: Colors.blueAccent,
                     ),
                     onChanged: (String newValue) {
                       setState(
                         () {
                           dropdownValue = newValue;
+                          getItemColor(newValue);
                         },
                       );
                     },
@@ -115,6 +162,7 @@ class _ItemCardState extends State<ItemCard> {
                 ),
                 RaisedButton(
                   onPressed: () {
+                    createData();
                     uploadImage(context);
                   },
                   child: Text('Submit'),
