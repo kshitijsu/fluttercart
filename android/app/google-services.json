@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "790330429591",
+    "firebase_url": "https://fluttercart-4cf95.firebaseio.com",
+    "project_id": "fluttercart-4cf95",
+    "storage_bucket": "fluttercart-4cf95.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:790330429591:android:fa6096449d47c4975159d2",
+        "android_client_info": {
+          "package_name": "com.example.flutterinternship"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "790330429591-8l0aes41tbnn95q5c7knf68kss16ledg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlYTpDiSmmwVuIYpxwF6IcD7gKPRbBI4s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "790330429591-8l0aes41tbnn95q5c7knf68kss16ledg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
