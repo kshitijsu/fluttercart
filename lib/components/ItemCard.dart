@@ -77,99 +77,102 @@ class _ItemCardState extends State<ItemCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Container(
-        margin: EdgeInsets.all(10),
-        child: Column(
-          children: <Widget>[
-            Container(
-              margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
-              height: 200,
-              width: MediaQuery.of(context).size.width,
-              child: (_image != null)
-                  ? Image.file(
-                      _image,
-                      fit: BoxFit.fill,
-                    )
-                  : Image.network(
-                      'https://images.unsplash.com/photo-1581068466660-e6585b8afa97?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80',
-                      height: 100,
-                      width: 100,
+      child: SingleChildScrollView(
+        child: Container(
+          margin: EdgeInsets.all(10),
+          child: Column(
+            children: <Widget>[
+              Container(
+                margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                height: 200,
+                width: MediaQuery.of(context).size.width,
+                child: (_image != null)
+                    ? Image.file(
+                        _image,
+                        fit: BoxFit.fill,
+                      )
+                    : Image.network(
+                        'https://images.unsplash.com/photo-1581068466660-e6585b8afa97?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80',
+                        height: 100,
+                        width: 100,
+                      ),
+              ),
+              TextFormField(
+                decoration: InputDecoration(
+                  labelText: 'Item Name',
+                  fillColor: Colors.white,
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.blue,
+                      width: 2.0,
                     ),
-            ),
-            TextFormField(
-              decoration: InputDecoration(
-                labelText: 'Item Name',
-                fillColor: Colors.white,
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.blue,
-                    width: 2.0,
                   ),
                 ),
+                onChanged: (String name) {
+                  getItemName(name);
+                },
               ),
-              onChanged: (String name) {
-                getItemName(name);
-              },
-            ),
-            Container(
-              margin: EdgeInsets.all(10),
-              child: Row(
+              Container(
+                margin: EdgeInsets.all(10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    DropdownButton<String>(
+                      value: dropdownValue,
+                      icon: Icon(Icons.arrow_drop_down),
+                      iconSize: 24,
+                      elevation: 16,
+                      style: TextStyle(color: Colors.black),
+                      underline: Container(
+                        height: 2,
+                        color: Colors.blueAccent,
+                      ),
+                      onChanged: (String newValue) {
+                        setState(
+                          () {
+                            dropdownValue = newValue;
+                            getItemColor(newValue);
+                          },
+                        );
+                      },
+                      items: <String>['Red', 'Blue', 'Green', 'Yellow']
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ),
+                    FlatButton.icon(
+                      icon: Icon(Icons.camera_alt),
+                      label: Text('Upload Image'),
+                      onPressed: () {
+                        getImage();
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
-                  DropdownButton<String>(
-                    value: dropdownValue,
-                    icon: Icon(Icons.arrow_drop_down),
-                    iconSize: 24,
-                    elevation: 16,
-                    style: TextStyle(color: Colors.black),
-                    underline: Container(
-                      height: 2,
-                      color: Colors.blueAccent,
-                    ),
-                    onChanged: (String newValue) {
-                      setState(
-                        () {
-                          dropdownValue = newValue;
-                          getItemColor(newValue);
-                        },
-                      );
-                    },
-                    items: <String>['Red', 'Blue', 'Green', 'Yellow']
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.camera_alt),
+                  RaisedButton(
                     onPressed: () {
-                      getImage();
+                      Navigator.of(context).pop();
                     },
+                    child: Text('Cancel'),
+                  ),
+                  RaisedButton(
+                    onPressed: () {
+                      createData();
+                      uploadImage(context);
+                    },
+                    child: Text('Submit'),
                   ),
                 ],
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                RaisedButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text('Cancel'),
-                ),
-                RaisedButton(
-                  onPressed: () {
-                    createData();
-                    uploadImage(context);
-                  },
-                  child: Text('Submit'),
-                ),
-              ],
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
