@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutterinternship/screens/ItemDetails.dart';
 import 'package:flutterinternship/screens/ItemListPage.dart';
+// import 'package:flutterinternship/screens/MultiFiles.dart';
+import 'package:flutterinternship/screens/MultipleImages.dart';
 
 import 'ItemPage.dart';
 
@@ -11,8 +14,11 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
   final List<Widget> _children = [
-    ItemPage(),
+    // ItemPage(),
+    ItemDetails(),
     ItemListPage(),
+    MultipleImages(),
+    // MultiFile(),
   ];
 
   void onTabTapped(int index) {
@@ -43,6 +49,10 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
             icon: new Icon(Icons.list),
             title: new Text('List Items'),
+          ),
+          BottomNavigationBarItem(
+            icon: new Icon(Icons.image),
+            title: new Text('Multiple Image'),
           ),
         ],
       ),
