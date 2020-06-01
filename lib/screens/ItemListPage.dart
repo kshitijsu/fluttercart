@@ -100,7 +100,8 @@ class _ItemListPageState extends State<ItemListPage> {
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (!snapshot.hasData) {
                 return Center(
-                  child: CircularProgressIndicator(),
+                  child: Text('No Data Found'),
+                  // CircularProgressIndicator(),
                 );
               } else {
                 return ListView.builder(

@@ -158,7 +158,7 @@ class _ItemCardState extends State<ItemCard> {
                 children: <Widget>[
                   RaisedButton(
                     onPressed: () {
-                      Navigator.of(context).pop();
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Text('Cancel'),
                   ),
