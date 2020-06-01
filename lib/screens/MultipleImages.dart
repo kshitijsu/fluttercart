@@ -106,32 +106,43 @@ class _MultipleImagesState extends State<MultipleImages> {
     return storageTaskSnapshot.ref.getDownloadURL();
   }
 
+  int _count = 1;
   @override
   Widget build(BuildContext context) {
+    List<Widget> _itemList = List.generate(
+      _count,
+      (int i) => ItemCard(),
+    );
+
     return SafeArea(
-      child: Card(
-        child: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              Container(
-                height: 100,
-                child: buildGridView(),
-              ),
-              RaisedButton(
-                child: Text("Pick images"),
-                onPressed: loadAssets,
-              ),
-              ItemCard(),
-              RaisedButton(
-                child: Text("Submit"),
-                onPressed: () => uploadImages(),
-                // postImage(images[2]),
-                // images.map(
-                // (value) => postImage(value),
+      child: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Container(
+              height: 200,
+              child: buildGridView(),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                RaisedButton.icon(
+                  icon: Icon(Icons.camera_alt),
+                  label: Text("Select images"),
+                  onPressed: loadAssets,
+                ),
+                RaisedButton(
+                  child: Text("Upload"),
+                  onPressed: () {
+                    uploadImages();
+                  },
+                ),
+                // RaisedButton(
+                //   child: Text("Add Another Item"),
+                //   onPressed: _addNewItemCard,
                 // ),
-              ),
-            ],
-          ),
+              ],
+            ),
+          ],
         ),
       ),
     );

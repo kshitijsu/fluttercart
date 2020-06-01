@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:path/path.dart';
-import 'dart:io';
+import 'SizeColor.dart';
 
 // classes
 class ItemCard extends StatefulWidget {
@@ -12,8 +9,6 @@ class ItemCard extends StatefulWidget {
 }
 
 class _ItemCardState extends State<ItemCard> {
-  // Firebase Image Upload
-  File _image;
   // List Count
   int _countColor = 1;
 
@@ -24,37 +19,6 @@ class _ItemCardState extends State<ItemCard> {
       },
     );
   }
-
-  Future getImage() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
-
-    setState(
-      () {
-        _image = image;
-        print('Image Path $_image');
-      },
-    );
-  }
-
-  // Future uploadImage(BuildContext context) async {
-  //   String fileName = basename(_image.path);
-  //   StorageReference firebaseStorageRef =
-  //       FirebaseStorage.instance.ref().child(fileName);
-  //   StorageUploadTask uploadImage = firebaseStorageRef.putFile(_image);
-  //   StorageTaskSnapshot taskSnapshot = await uploadImage.onComplete;
-  //   print(taskSnapshot);
-
-  //   setState(
-  //     () {
-  //       print('Image Uploaded');
-  //       Scaffold.of(context).showSnackBar(
-  //         SnackBar(
-  //           content: Text('Image Uploaded'),
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
 
   // Storing data
   String itemName;
@@ -114,7 +78,7 @@ class _ItemCardState extends State<ItemCard> {
                       child: Column(
                         children: <Widget>[
                           Container(
-                            height: 150,
+                            height: 200,
                             child: ListView(
                               children: _sizeColor,
                               scrollDirection: Axis.vertical,
@@ -150,87 +114,6 @@ class _ItemCardState extends State<ItemCard> {
           ],
         ),
       ),
-    );
-  }
-}
-
-class SizeColor extends StatefulWidget {
-  @override
-  _SizeColorState createState() => _SizeColorState();
-}
-
-class _SizeColorState extends State<SizeColor> {
-  String itemColor;
-
-  // Drop Down Initial Value
-  String dropdownValue = 'Red';
-  String size = 'S';
-
-  void getItemColor(String itemColor) {
-    this.itemColor = itemColor;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: <Widget>[
-        DropdownButton<String>(
-          value: dropdownValue,
-          icon: Icon(Icons.arrow_drop_down),
-          iconSize: 24,
-          elevation: 16,
-          style: TextStyle(color: Colors.black),
-          underline: Container(
-            height: 2,
-            color: Colors.blueAccent,
-          ),
-          onChanged: (String newValue) {
-            setState(
-              () {
-                dropdownValue = newValue;
-                getItemColor(newValue);
-              },
-            );
-          },
-          items: <String>['Red', 'Blue', 'Green', 'Yellow']
-              .map<DropdownMenuItem<String>>(
-            (String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            },
-          ).toList(),
-        ),
-        DropdownButton<String>(
-          value: size,
-          icon: Icon(Icons.arrow_drop_down),
-          iconSize: 24,
-          elevation: 16,
-          style: TextStyle(color: Colors.black),
-          underline: Container(
-            height: 2,
-            color: Colors.blueAccent,
-          ),
-          onChanged: (String newValue) {
-            setState(
-              () {
-                size = newValue;
-                getItemColor(newValue);
-              },
-            );
-          },
-          items: <String>['S', 'M', 'L', 'XL'].map<DropdownMenuItem<String>>(
-            (String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            },
-          ).toList(),
-        ),
-      ],
     );
   }
 }
