@@ -1,4 +1,3 @@
-# Flutter Cart
+# Flutter Internship
 
-Inventory App
-# flutterinternship
+## A simple internship task
