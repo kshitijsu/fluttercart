@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutterinternship/calling/Parent.dart';
 
 import 'screens/HomePage.dart';
 
@@ -18,9 +19,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home:
-          //  ProfilePage(),
-          HomePage(),
+      home: Parent(),
+      //  ProfilePage(),
+      // HomePage(),
     );
   }
 }
